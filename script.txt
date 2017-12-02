@@ -1,0 +1,134 @@
+基本语法	
+	注释 	// 	/* */
+	对大小写敏感
+数据类型：
+	Number:
+		123; // 整数123
+		0.456; // 浮点数0.456
+		1.2345e3; // 科学计数法表示1.2345x1000，等同于1234.5
+		-99; // 负数
+		NaN; // NaN表示Not a Number，当无法计算结果时用NaN表示 ;0/0
+		Infinity; // Infinity表示无限大，当数值超过了JavaScript的Number所能表示的最大值时，就表示为Infinity 2/0
+	字符串：
+		转义 \  'I\'am a \"ok\" \';
+		多行 ` `，在`中的各格式保持多行，不需要\n转义
+		模板字符串 ${} 在字符串中变量替换
+		字符串操作方法：
+			var s='hello' ;    s.toUpperCase();s.toLowerCase()
+			s.indexOf('llo'); s.length
+			 s.substring(0,5); s[0];获取指定位置字符
+			
+	布尔类型：
+		逻辑运算 比较预算 true or false
+		注意 NaN和所有值都不等，包括自己isNaN（NaN）
+		浮点数无法比较
+	null undefined
+	数组 
+		创建 var arr=[1,2,3] *
+				new Array(1,2,3)通过函数创建
+		数组操作
+			arr.length;(给arr.length赋值会让数组大小变化，但是s.length 不会变化)
+			arr.indexOf(10);arr.slice(0,3);
+			arr.push(2,3)末尾添加元素arr.pop()删除最后一个元素
+			arr.unshift(2,3);arr.shift()
+			arr.sort();arr.reverse()
+			arr.splice(1,2,'google');修改数组
+			arr.concat([1,2,3]);arr.join('-')连接
+	对象
+		键-值组成的无序集合
+		注意 对象的键都是字符串类型，值可以是任意类型
+		键需要时有效变量名不然不能用.调用属性
+		检查属性存在
+			'name' in xiaoming;
+			xiaoming.hasOwnProperty('name');
+		
+     变量   
+         在JavaScript中就是用一个变量名表示
+        变量名是大小写英文、数字、$和_的组合，且不能用数字开头。变量名也不能是JavaScript的关键字，如if、while等。申明一个变量用var语句
+		
+	Map
+		x相当于PHP中的关联数组；
+			var m = new Map([['Michael', 95], ['Bob', 75], ['Tracy', 85]]);
+			var m = new Map(); // 空Map
+			m.set('Adam', 67); // 添加新的key-value
+			m.set('Bob', 59);
+			m.has('Adam'); // 是否存在key 'Adam': true
+			m.get('Adam'); // 67
+			m.delete('Adam'); // 删除key 'Adam'
+			m.get('Adam'); // undefined
+	具有iterable类型的集合可以通过新的for ... of循环来遍历
+	iterable 类型可以用forEach 方法遍历 arr.forEach(function(element,index,array){console.log(element)})
+	函数
+		function abs(x){
+			if(x>0){
+				return x;
+			}else{
+				return -x;
+			}
+		};
+		var abs=function(x){
+			if(x>0){
+				return x;
+			}else{
+				return -x;
+			}
+		}; //匿名函数
+		
+		参数调用JavaScript允许传入任意个参数而不影响调用
+		关键字arguments，它只在函数内部起作用，并且永远指向当前函数的调用者传入的所有参数
+		function foo(a, b, ...rest) {
+			console.log('a = ' + a);
+			console.log('b = ' + b);
+			console.log(rest);
+		}
+		如果一个变量在函数体内部申明，则该变量的作用域为整个函数体，在函数体外不可引用该变量
+		全局变量
+			全局变量会绑定到window上，不同的JavaScript文件如果使用了相同的全局变量，或者定义了相同名字的顶层函数，都会造成命名冲突
+			为了防止冲突
+				// 唯一的全局变量MYAPP:
+				var MYAPP = {};
+				// 其他变量:
+				MYAPP.name = 'myapp';
+				MYAPP.version = 1.0;
+				// 其他函数:
+				MYAPP.foo = function () {
+					return 'foo';
+				};
+		局部变量
+			为了解决块级作用域，ES6引入了新的关键字let，用let替代var可以申明一个块级作用域的变量		
+		常量
+			ES6标准引入了新的关键字const来定义常量，const与let都具有块级作用域
+		ES6开始，JavaScript引入了解构赋值，可以同时对一组变量进行赋值
+		
+		this是一个特殊变量，始终指向当前的对象。
+		function getAge() {
+			var y = new Date().getFullYear();
+			return y - this.birth;
+		}
+
+		var xiaoming = {
+			name: '小明',
+			birth: 1990,
+			age: getAge
+		};
+
+		xiaoming.age(); // 25, 正常结果
+		getAge(); // NaN
+apply(),call()属于函数的方法
+		如果要修复getAge ()则需要apply()或者call()
+		getAge.apply(xiaoming,[函数本身参数])
+		getAge.call(xiaoming ,3)
+高阶函数
+	function add(x,y,f){
+		return f(x)+f(y);
+	}
+	1 map属于Array的方法arr.map(f)；一次接受数组一个数
+	2 reduce属于Array的方法 arr.reduce(f)一次接受数组两个数
+	3 filter属于Array 的方法arr.filter(f)把传入的函数依次作用于每一个元素，根据返回值是true还是false,来决定
+	example:arr.filter(function(x){return x&&x.trim();}}去掉一个空字符串
+	filter中数组去重：
+	arr.filter(function(element,index,self){
+		return self.indexOf(element)===index;
+	})
+	4 sort属于Array的一个方法，用于排序
+运算符的妙用：在数值字符串前加一个+，字符串会自动转化成一个Number
